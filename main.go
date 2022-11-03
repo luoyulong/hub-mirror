@@ -94,9 +94,15 @@ func main() {
 
 			fmt.Println("开始转换", source, "=>", target)
 			ctx := context.Background()
+			authConfig := types.AuthConfig{
+			Username: *source_username,
+			Password: *source_password,
+			}
+			encodeJson, _ := json.Marshal(authConfig)
+			authStr := base64.StdEncoding.EncodeToString(encodeJson)
 
 			// 拉取镜像
-			pullOut, err := cli.ImagePull(ctx, source, types.ImagePullOptions{})
+			pullOut, err := cli.ImagePull(ctx, source, types.ImagePullOptions{RegistryAuth: authStr})
 			if err != nil {
 				panic(err)
 			}
