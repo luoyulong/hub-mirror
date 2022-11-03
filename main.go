@@ -101,10 +101,10 @@ func main() {
 			Password: *source_password,
 			}
 			encodeJson, _ := json.Marshal(authConfig)
-			authStr := base64.StdEncoding.EncodeToString(encodeJson)
+			sourceAuthStr := base64.StdEncoding.EncodeToString(encodeJson)
 
 			// 拉取镜像
-			pullOut, err := cli.ImagePull(ctx, source, types.ImagePullOptions{RegistryAuth: authStr})
+			pullOut, err := cli.ImagePull(ctx, source, types.ImagePullOptions{RegistryAuth: sourceAuthStr})
 			if err != nil {
 				panic(err)
 			}
